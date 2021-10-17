@@ -1,0 +1,24 @@
+const express = require('express');
+const client = require('twilio')('ACe59412df8947b6a3f65c28ad24439f9d', 'b8115f7a40b0ab0840e9a5c96439b987');
+const app = express();
+const port = 3001;
+
+
+app.get('/', (req, res)=>{
+	SendTextMessage();
+	res.send('<div style= "text-align:center; padding-top:40px;"><h1>Message has been sent!</h1><p>This is hello world app</p></div>');
+});
+
+app.listen(port, ()=>{
+	console.log(`example app listening at http://localhost:${port}`);
+})
+
+function SendTextMessage() {
+	client.messages.create({
+		body: 'Hello from Node',
+		to: '+917202843916',
+		from: '+15404529336'
+	}).then(message => console.log(message))
+	// here you can implement your fallback code
+	.catch(error => console.log(error))
+}
